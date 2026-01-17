@@ -1,0 +1,28 @@
+.page-shell {
+  min-height: 100vh;
+}
+
+.grid-panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.section-title {
+  letter-spacing: 0.03em;
+}
+
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #38bdf8, #f97316);
+  opacity: 0.45;
+  z-index: -1;
+  filter: blur(8px);
+}

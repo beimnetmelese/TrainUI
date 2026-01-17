@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: #050914;
+  color: #e8edf7;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.14), transparent 26%),
+    radial-gradient(circle at 78% 8%, rgba(99, 102, 241, 0.18), transparent 26%),
+    radial-gradient(circle at 18% 70%, rgba(236, 72, 153, 0.12), transparent 28%),
+    #050914;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+}
+
+.card-gradient {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(15, 23, 42, 0.85));
+}
+
+.glow-border {
+  position: relative;
+}
+
+.glow-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 18px;
+  background: linear-gradient(120deg, rgba(56, 189, 248, 0.7), rgba(99, 102, 241, 0.5), rgba(251, 146, 60, 0.65));
+  opacity: 0.5;
+  filter: blur(16px);
+  z-index: -1;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.7) rgba(255, 255, 255, 0.04);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(56, 189, 248, 0.9), rgba(249, 115, 22, 0.85));
+  border-radius: 999px;
+  border: 2px solid rgba(11, 18, 36, 0.8);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(125, 211, 252, 0.95), rgba(251, 146, 60, 0.95));
+}
+
+@media (max-width: 768px) {
+  .page-shell main {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
