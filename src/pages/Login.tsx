@@ -14,8 +14,13 @@ const Login = () => {
     e.preventDefault();
     setError("");
     try {
-      await login(username, password);
-      navigate("/");
+      const auth = await login(username, password);
+      const admin = Boolean(
+        auth.user?.is_staff ||
+        auth.user?.is_superuser ||
+        (auth.user as any)?.is_admin,
+      );
+      navigate(admin ? "/admin" : "/");
     } catch (err) {
       setError("Invalid credentials");
       console.error(err);

@@ -19,7 +19,7 @@ interface AuthContextProps {
   refreshToken?: string;
   loading: boolean;
   isAdmin: boolean;
-  login: (username: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<AuthResponse>;
   register: (payload: Partial<User> & { password: string }) => Promise<void>;
   logout: () => void;
   setUser: (user?: User) => void;
@@ -91,6 +91,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setAuthToken(undefined);
       const data = await loginApi(username.trim(), password);
       handleAuthSuccess(data);
+      return data;
     } finally {
       setLoading(false);
     }

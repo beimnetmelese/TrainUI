@@ -19,6 +19,7 @@ const UserDashboard = () => {
     start_location: LOCATIONS[0],
     end_location: LOCATIONS[1],
   });
+  const [locationTick, setLocationTick] = useState(0);
   const [loading, setLoading] = useState(false);
   const [notice, setNotice] = useState("");
   const activeTimers = useRef<Record<number, number[]>>({});
@@ -65,6 +66,27 @@ const UserDashboard = () => {
     load();
     loadRequests();
   }, []);
+
+  useEffect(() => {
+    if (!activeRequestId) return;
+
+    const req = requests.find((r) => r.id === activeRequestId);
+    if (!req) return;
+
+    if (
+      req.status === "in_train" &&
+      currentStopRef.current === req.end_location
+    ) {
+      setRequests((prev) =>
+        prev.map((r) => (r.id === req.id ? { ...r, status: "completed" } : r)),
+      );
+
+      setNotice("You arrived at your destination.");
+      setActiveRequestId(null);
+      delete requestSeqRef.current[req.id];
+      delete activeTimers.current[req.id];
+    }
+  }, [locationTick]); // 👈 THIS is the magic
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -137,20 +159,7 @@ const UserDashboard = () => {
             setNotice("You are on the train. En route…");
           }, 3500);
 
-          const toArrived = window.setTimeout(() => {
-            setRequests((prev) =>
-              prev.map((r) =>
-                r.id === withLocal.id && r.status !== "cancelled"
-                  ? { ...r, status: "completed" }
-                  : r,
-              ),
-            );
-            setActiveRequestId(null);
-            delete requestSeqRef.current[withLocal.id];
-            setNotice("You arrived at your destination.");
-          }, 8000);
-
-          activeTimers.current[withLocal.id] = [toInTrain, toArrived];
+          activeTimers.current[withLocal.id] = [toInTrain];
         }
       }, 1200);
 
@@ -192,6 +201,7 @@ const UserDashboard = () => {
     setCurrentStop(name);
     currentStopRef.current = name;
     locationSeqRef.current += 1;
+    setLocationTick((t) => t + 1); // 🔥 THIS wakes React up
   };
 
   return (
